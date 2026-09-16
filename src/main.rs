@@ -15,6 +15,9 @@ opening, winning and losing messages>
 */
 
 use rand::Rng;
+use std::io;
+
+
 
 fn main() {
     println!("Hello battleship!");
@@ -76,6 +79,10 @@ println!("Pick a spot. try to sink all the ship!")
 println!("Available spots: {:?}", spots);
 
 
+
+let mut input = String::new();
+io::stdin().read_line(&mut input).expect("Failed to read input");
+println!("You entered: {}", input);
 
 
 }
