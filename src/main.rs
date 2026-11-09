@@ -19,10 +19,16 @@ use std::io;
 
 fn main() {
     let mut rng = rand::rng();
+    
     let random_num: i32 = rng.random_range(1..=3);
     println!("Dice roll: {}", random_num);
+    println!("==================================================");
+    println!("           Welcome to Battleship!                 |");
+    println!("The grid is 5x5, with letters A-E and numbers 1-5.|");
+    println!("    You have 10 chances to sink all the ships!    |");
+    println!("==================================================");
+   
 
-    println!("Hello battleship!");
     let mut spots = vec![
         "A1", "A2", "A3", "A4", "A5", "B1", "B2", "B3", "B4", "B5", "C1", "C2", "C3", "C4", "C5", "D1", "D2", "D3", "D4", "D5", "E1", "E2", "E3",
         "E4", "E5",
