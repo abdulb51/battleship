@@ -19,7 +19,7 @@ use std::io;
 
 fn main() {
     let mut rng = rand::rng();
-    let random_num: i32 = rng.random_range(1..=1);
+    let random_num: i32 = rng.random_range(1..=3);
     println!("Dice roll: {}", random_num);
 
     println!("Hello battleship!");
@@ -28,14 +28,11 @@ fn main() {
         "E4", "E5",
     ];
     let mut chances = 10;
+    let mut turns = 0;
 
     let mut ship1 = vec![];
     let mut ship2 = vec![];
     let mut ship3 = vec![];
-
-
-
-
 
     if random_num == 1 {
         ship1.push("A1");
@@ -81,38 +78,53 @@ fn main() {
             println!("Ship 3: {:?}", ship3);
         }
 
-
-
-
-
-
         println!("You entered: {}", guess.trim()); // just so you know what you typed but yeah
 
-        if guess.trim() == "a1" || guess.trim() == "A1" && ship1.contains(&"A1") || ship2.contains(&"A1") || ship3.contains(&"A1") {
-            println!("You hit the ship!");
-            spots.remove(spots.iter().position(|&r| r == "A1").unwrap());
-            ship1.remove(ship1.iter().position(|&r| r == "A1").unwrap());
-        } else {
-            println!(
-                "You hit! the water..
-        better luck next time"
-            );
-                spots.remove(spots.iter().position(|&r| r == "A1").unwrap());
-            chances -= 1;
-            println!("You have {} chances left", chances);
-            println!("remaining spaces: {:?}", spots);
+        let guess = guess.trim().to_uppercase(); // so a1 and A1 both work
+
+        // cant guess the same box twice
+        if !spots.contains(&guess.as_str()) {
+            println!("You already guessed that (or it's not on the grid), try again");
+            continue;
         }
 
+        turns += 1;
+        spots.remove(spots.iter().position(|&spot| spot == guess).unwrap());
 
-     if chances == 0 {
-            println!(
-                "You have no chances left"
-            );
+        // check each ship for a hit
+        if ship1.contains(&guess.as_str()) {
+            println!("You hit the ship!");
+            ship1.remove(ship1.iter().position(|&spot| spot == guess).unwrap());
+
+        } else if ship2.contains(&guess.as_str()) {
+            println!("You hit the ship!");
+            ship2.remove(ship2.iter().position(|&spot| spot == guess).unwrap());
+            
+        } else if ship3.contains(&guess.as_str()) {
+            println!("You hit the ship!");
+
+            ship3.remove(ship3.iter().position(|&spot| spot == guess).unwrap());
+        } else {
+
+            println!("You hit! the water.. better luck next time");
+            chances -= 1;
+            println!("You have {} chances left", chances);
+        }
+
+        println!("remaining spaces: {:?}", spots);
+
+        // win: every ship is empty
+        if ship1.is_empty() && ship2.is_empty() && ship3.is_empty() {
+            println!("You sunk all the ships! You win!");
+            println!("It took you {} turns", turns);
             break;
-        } 
+        }
+
+        // lose: out of chances
+        if chances == 0 {
+            println!("You have no chances left, you lose!");
+            println!("You used {} turns", turns);
+            break;
+        }
     }
-
-
-
-
 }
