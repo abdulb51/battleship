@@ -19,7 +19,7 @@ use std::io;
 
 fn main() {
     let mut rng = rand::rng();
-    
+
     let random_num: i32 = rng.random_range(1..=3);
     println!("Dice roll: {}", random_num);
     println!("==================================================");
@@ -73,7 +73,12 @@ fn main() {
 
     loop {
         println!("Available spots: {:?}", spots);
-
+     //   println!("{} | {} | {} | {} | {}", spots[0], spots[1], spots[2], spots[3], spots[4]);
+     //   println!("{} | {} | {} | {} | {}", spots[5], spots[6], spots[7], spots[8], spots[9]);
+     //   println!("{} | {} | {} | {} | {}", spots[10], spots[11], spots[12], spots[13], spots[14]);
+     //   println!("{} | {} | {} | {} | {}", spots[15], spots[16], spots[17], spots[18], spots[19]);
+     //   println!("{} | {} | {} | {} | {}", spots[20], spots[21], spots[22], spots[23], spots[24]);
+        
         let mut guess = String::new();
         io::stdin().read_line(&mut guess).expect("Failed to read input");
 
